@@ -2,7 +2,10 @@ SOURCE_FILES := $(wildcard examples/*.cbl)
 EXECUTABLES := $(SOURCE_FILES:examples/%.cbl=examples_exec/%)
 WRAPPER_OBJ := raylib_wrapper.o
 
-examples: $(EXECUTABLES)
+examples: examples_exec $(EXECUTABLES)
+
+examples_exec:
+	mkdir -p examples_exec
 
 examples_exec/%: examples/%.cbl $(WRAPPER_OBJ)
 	cobc -x -free -o $@ $< $(WRAPPER_OBJ) -lraylib
